@@ -1,0 +1,1706 @@
+/*	   Solucion_evidencia_SQL.txt  
+
+	   Realizado por:
+		Laura Argáez
+		Omar Caguazango
+
+	   Instructor
+		Ing. Deivid Triviño
+
+		Ficha 2348214
+
+		Junio/2022
+
+LO QUE DEBE CONTENER LA EVIDENCIA  
+
+Para el Desarrollo del proyecto en curso tenga en cuenta el siguiente procedimiento:
+
+1. Leer detenidamente cada enunciado.
+2. Crear las Tablas. 
+3. Identificar las entidades con sus campos.
+4. Responder las consultas propuestas utilizando el lenguaje estructurado de consultas SQL con la solución a cada ejercicio empleando la sintaxis definida.
+5. Copiar el código SQL, en un único documento, el cual debe contener el enunciado y la solución de cada enunciado.
+6. Guardar el archivo con el código SQL, en formato .txt con el nombre Solucion_evidencia_SQL.                     */
+
+
+/* Script generado desde SQL SERVER 
+
+	Desde la línea 184 inicia los inserción de datos tabla Ciudades
+	Desde la línea 1315 inicia los inserción de datos tabla Cliente
+	Desde la línea 1336 inicia los inserción de datos tabla Factura
+	Desde la línea 1367 inicia los inserción de datos tabla Productos
+
+*/
+
+USE [master]
+GO
+/****** Object:  Database [Tienda Don Jose]    Script Date: 05/06/2022 19:00:31 ******/
+CREATE DATABASE [Tienda Don Jose]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'Tienda Don Josè', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\Tienda Don Josè.mdf' , SIZE = 5120KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'Tienda Don Josè_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL12.MSSQLSERVER\MSSQL\DATA\Tienda Don Josè_log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+ALTER DATABASE [Tienda Don Jose] SET COMPATIBILITY_LEVEL = 120
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [Tienda Don Jose].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [Tienda Don Jose] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [Tienda Don Jose] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [Tienda Don Jose] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET  DISABLE_BROKER 
+GO
+ALTER DATABASE [Tienda Don Jose] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [Tienda Don Jose] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [Tienda Don Jose] SET  MULTI_USER 
+GO
+ALTER DATABASE [Tienda Don Jose] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [Tienda Don Jose] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [Tienda Don Jose] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [Tienda Don Jose] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+ALTER DATABASE [Tienda Don Jose] SET DELAYED_DURABILITY = DISABLED 
+GO
+USE [Tienda Don Jose]
+GO
+/****** Object:  Table [dbo].[Ciudades]    Script Date: 05/06/2022 19:00:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Ciudades](
+	[IDCiudad] [int] NOT NULL,
+	[NombreC] [varchar](50) NOT NULL,
+ CONSTRAINT [PK_Ciudades] PRIMARY KEY CLUSTERED 
+(
+	[IDCiudad] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Cliente]    Script Date: 05/06/2022 19:00:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Cliente](
+	[IDCliente] [int] NOT NULL,
+	[Nombre] [varchar](50) NOT NULL,
+	[Apellido] [varchar](50) NOT NULL,
+	[Direccion] [varchar](50) NOT NULL,
+	[Correo] [varchar](50) NOT NULL,
+	[Telefono] [int] NOT NULL,
+	[IDCiudad] [int] NOT NULL,
+ CONSTRAINT [PK_Cliente] PRIMARY KEY CLUSTERED 
+(
+	[IDCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Factura]    Script Date: 05/06/2022 19:00:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Factura](
+	[IDFactura] [int] NOT NULL,
+	[IDCliente] [int] NOT NULL,
+	[FechaVenta] [date] NOT NULL,
+	[Cantidad] [int] NOT NULL,
+	[ValorVenta] [money] NOT NULL,
+	[Descuentos] [real] NULL,
+	[IDProducto] [int] NOT NULL,
+ CONSTRAINT [PK_Factura] PRIMARY KEY CLUSTERED 
+(
+	[IDFactura] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Productos]    Script Date: 05/06/2022 19:00:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Productos](
+	[IDProducto] [int] NOT NULL,
+	[NombreProducto] [varchar](50) NOT NULL,
+	[Valor] [money] NOT NULL,
+	[FechaEntrada] [date] NOT NULL,
+ CONSTRAINT [PK_Productos] PRIMARY KEY CLUSTERED 
+(
+	[IDProducto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5001, N'MEDELLIN                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5002, N'ABEJORRAL                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5004, N'ABRIAQUI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5021, N'ALEJANDRIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5030, N'AMAGA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5031, N'AMALFI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5034, N'ANDES                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5036, N'ANGELOPOLIS                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5038, N'ANGOSTURA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5040, N'ANORI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5042, N'SANTAFE DE ANTIOQUIA                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5044, N'ANZA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5045, N'APARTADO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5051, N'ARBOLETES                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5055, N'ARGELIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5059, N'ARMENIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5079, N'BARBOSA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5086, N'BELMIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5088, N'BELLO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5091, N'BETANIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5093, N'BETULIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5101, N'CIUDAD BOLIVAR                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5107, N'BRICEÑO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5113, N'BURITICA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5120, N'CACERES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5125, N'CAICEDO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5129, N'CALDAS                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5134, N'CAMPAMENTO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5138, N'CAÑASGORDAS                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5142, N'CARACOLI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5145, N'CARAMANTA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5147, N'CAREPA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5148, N'EL CARMEN DE VIBORAL                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5150, N'CAROLINA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5154, N'CAUCASIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5172, N'CHIGORODO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5190, N'CISNEROS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5197, N'COCORNA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5206, N'CONCEPCION                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5209, N'CONCORDIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5212, N'COPACABANA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5234, N'DABEIBA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5237, N'DON MATIAS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5240, N'EBEJICO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5250, N'EL BAGRE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5264, N'ENTRERRIOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5266, N'ENVIGADO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5282, N'FREDONIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5284, N'FRONTINO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5306, N'GIRALDO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5308, N'GIRARDOTA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5310, N'GOMEZ PLATA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5313, N'GRANADA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5315, N'GUADALUPE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5318, N'GUARNE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5321, N'GUATAPE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5347, N'HELICONIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5353, N'HISPANIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5360, N'ITAGUI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5361, N'ITUANGO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5364, N'JARDIN                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5368, N'JERICO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5376, N'LA CEJA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5380, N'LA ESTRELLA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5390, N'LA PINTADA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5400, N'LA UNION                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5411, N'LIBORINA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5425, N'MACEO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5440, N'MARINILLA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5467, N'MONTEBELLO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5475, N'MURINDO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5480, N'MUTATA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5483, N'NARIÑO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5490, N'NECOCLI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5495, N'NECHI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5501, N'OLAYA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5541, N'PEÑOL                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5543, N'PEQUE                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5576, N'PUEBLORRICO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5579, N'PUERTO BERRIO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5585, N'PUERTO NARE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5591, N'PUERTO TRIUNFO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5604, N'REMEDIOS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5607, N'RETIRO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5615, N'RIONEGRO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5628, N'SABANALARGA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5631, N'SABANETA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5642, N'SALGAR                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5647, N'SAN ANDRES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5649, N'SAN CARLOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5652, N'SAN FRANCISCO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5656, N'SAN JERONIMO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5658, N'SAN JOSE DE LA MONTAÑA                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5659, N'SAN JUAN DE URABA                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5660, N'SAN LUIS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5664, N'SAN PEDRO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5665, N'SAN PEDRO DE URABA                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5667, N'SAN RAFAEL                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5670, N'SAN ROQUE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5674, N'SAN VICENTE                                       ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5679, N'SANTA BARBARA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5686, N'SANTA ROSA DE OSOS                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5690, N'SANTO DOMINGO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5697, N'EL SANTUARIO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5736, N'SEGOVIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5756, N'SONSON                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5761, N'SOPETRAN                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5789, N'TAMESIS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5790, N'TARAZA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5792, N'TARSO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5809, N'TITIRIBI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5819, N'TOLEDO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5837, N'TURBO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5842, N'URAMITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5847, N'URRAO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5854, N'VALDIVIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5856, N'VALPARAISO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5858, N'VEGACHI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5861, N'VENECIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5873, N'VIGIA DEL FUERTE                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5885, N'YALI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5887, N'YARUMAL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5890, N'YOLOMBO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5893, N'YONDO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (5895, N'ZARAGOZA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8001, N'BARRANQUILLA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8078, N'BARANOA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8137, N'CAMPO DE LA CRUZ                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8141, N'CANDELARIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8296, N'GALAPA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8372, N'JUAN DE ACOSTA                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8421, N'LURUACO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8433, N'MALAMBO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8436, N'MANATI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8520, N'PALMAR DE VARELA                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8549, N'PIOJO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8558, N'POLONUEVO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8560, N'PONEDERA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8573, N'PUERTO COLOMBIA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8606, N'REPELON                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8634, N'SABANAGRANDE                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8638, N'SABANALARGA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8675, N'SANTA LUCIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8685, N'SANTO TOMAS                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8758, N'SOLEDAD                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8770, N'SUAN                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8832, N'TUBARA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (8849, N'USIACURI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (11001, N'BOGOTA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13001, N'CARTAGENA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13006, N'ACHI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13030, N'ALTOS DEL ROSARIO                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13042, N'ARENAL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13052, N'ARJONA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13062, N'ARROYOHONDO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13074, N'BARRANCO DE LOBA                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13140, N'CALAMAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13160, N'CANTAGALLO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13188, N'CICUCO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13212, N'CORDOBA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13222, N'CLEMENCIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13244, N'EL CARMEN DE BOLIVAR                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13248, N'EL GUAMO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13268, N'EL PEÑON                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13300, N'HATILLO DE LOBA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13430, N'MAGANGUE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13433, N'MAHATES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13440, N'MARGARITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13442, N'MARIA LA BAJA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13458, N'MONTECRISTO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13468, N'MOMPOS                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13473, N'MORALES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13549, N'PINILLOS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13580, N'REGIDOR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13600, N'RIO VIEJO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13620, N'SAN CRISTOBAL                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13647, N'SAN ESTANISLAO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13650, N'SAN FERNANDO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13654, N'SAN JACINTO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13655, N'SAN JACINTO DEL CAUCA                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13657, N'SAN JUAN NEPOMUCENO                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13667, N'SAN MARTIN DE LOBA                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13670, N'SAN PABLO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13673, N'SANTA CATALINA                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13683, N'SANTA ROSA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13688, N'SANTA ROSA DEL SUR                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13744, N'SIMITI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13760, N'SOPLAVIENTO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13780, N'TALAIGUA NUEVO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13810, N'TIQUISIO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13836, N'TURBACO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13838, N'TURBANA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13873, N'VILLANUEVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (13894, N'ZAMBRANO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15001, N'TUNJA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15022, N'ALMEIDA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15047, N'AQUITANIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15051, N'ARCABUCO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15087, N'BELEN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15090, N'BERBEO                                            ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15092, N'BETEITIVA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15097, N'BOAVITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15104, N'BOYACA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15106, N'BRICEÑO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15109, N'BUENAVISTA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15114, N'BUSBANZA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15131, N'CALDAS                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15135, N'CAMPOHERMOSO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15162, N'CERINZA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15172, N'CHINAVITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15176, N'CHIQUINQUIRA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15180, N'CHISCAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15183, N'CHITA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15185, N'CHITARAQUE                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15187, N'CHIVATA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15189, N'CIENEGA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15204, N'COMBITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15212, N'COPER                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15215, N'CORRALES                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15218, N'COVARACHIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15223, N'CUBARA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15224, N'CUCAITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15226, N'CUITIVA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15232, N'CHIQUIZA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15236, N'CHIVOR                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15238, N'DUITAMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15244, N'EL COCUY                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15248, N'EL ESPINO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15272, N'FIRAVITOBA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15276, N'FLORESTA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15293, N'GACHANTIVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15296, N'GAMEZA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15299, N'GARAGOA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15317, N'GUACAMAYAS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15322, N'GUATEQUE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15325, N'GUAYATA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15332, N'GÜICAN                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15362, N'IZA                                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15367, N'JENESANO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15368, N'JERICO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15377, N'LABRANZAGRANDE                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15380, N'LA CAPILLA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15401, N'LA VICTORIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15403, N'LA UVITA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15407, N'VILLA DE LEYVA                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15425, N'MACANAL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15442, N'MARIPI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15455, N'MIRAFLORES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15464, N'MONGUA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15466, N'MONGUI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15469, N'MONIQUIRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15476, N'MOTAVITA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15480, N'MUZO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15491, N'NOBSA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15494, N'NUEVO COLON                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15500, N'OICATA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15507, N'OTANCHE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15511, N'PACHAVITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15514, N'PAEZ                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15516, N'PAIPA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15518, N'PAJARITO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15522, N'PANQUEBA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15531, N'PAUNA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15533, N'PAYA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15537, N'PAZ DE RIO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15542, N'PESCA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15550, N'PISBA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15572, N'PUERTO BOYACA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15580, N'QUIPAMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15599, N'RAMIRIQUI                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15600, N'RAQUIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15621, N'RONDON                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15632, N'SABOYA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15638, N'SACHICA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15646, N'SAMACA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15660, N'SAN EDUARDO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15664, N'SAN JOSE DE PARE                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15667, N'SAN LUIS DE GACENO                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15673, N'SAN MATEO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15676, N'SAN MIGUEL DE SEMA                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15681, N'SAN PABLO DE BORBUR                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15686, N'SANTANA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15690, N'SANTA MARIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15693, N'SANTA ROSA DE VITERBO                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15696, N'SANTA SOFIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15720, N'SATIVANORTE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15723, N'SATIVASUR                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15740, N'SIACHOQUE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15753, N'SOATA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15755, N'SOCOTA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15757, N'SOCHA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15759, N'SOGAMOSO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15761, N'SOMONDOCO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15762, N'SORA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15763, N'SOTAQUIRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15764, N'SORACA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15774, N'SUSACON                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15776, N'SUTAMARCHAN                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15778, N'SUTATENZA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15790, N'TASCO                                             ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15798, N'TENZA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15804, N'TIBANA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15806, N'TIBASOSA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15808, N'TINJACA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15810, N'TIPACOQUE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15814, N'TOCA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15816, N'TOGÜI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15820, N'TOPAGA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15822, N'TOTA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15832, N'TUNUNGUA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15835, N'TURMEQUE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15837, N'TUTA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15839, N'TUTAZA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15842, N'UMBITA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15861, N'VENTAQUEMADA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15879, N'VIRACACHA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (15897, N'ZETAQUIRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17001, N'MANIZALES                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17013, N'AGUADAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17042, N'ANSERMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17050, N'ARANZAZU                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17088, N'BELALCAZAR                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17174, N'CHINCHINA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17272, N'FILADELFIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17380, N'LA DORADA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17388, N'LA MERCED                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17433, N'MANZANARES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17442, N'MARMATO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17444, N'MARQUETALIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17446, N'MARULANDA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17486, N'NEIRA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17495, N'NORCASIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17513, N'PACORA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17524, N'PALESTINA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17541, N'PENSILVANIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17614, N'RIOSUCIO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17616, N'RISARALDA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17653, N'SALAMINA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17662, N'SAMANA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17665, N'SAN JOSE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17777, N'SUPIA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17867, N'VICTORIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17873, N'VILLAMARIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (17877, N'VITERBO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18001, N'FLORENCIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18029, N'ALBANIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18094, N'BELEN DE LOS ANDAQUIES                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18150, N'CARTAGENA DEL CHAIRA                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18205, N'CURILLO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18247, N'EL DONCELLO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18256, N'EL PAUJIL                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18410, N'LA MONTAÑITA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18460, N'MILAN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18479, N'MORELIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18592, N'PUERTO RICO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18610, N'SAN JOSE DEL FRAGUA                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18753, N'SAN VICENTE DEL CAGUAN                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18756, N'SOLANO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18785, N'SOLITA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (18860, N'VALPARAISO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19001, N'POPAYAN                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19022, N'ALMAGUER                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19050, N'ARGELIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19075, N'BALBOA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19100, N'BOLIVAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19110, N'BUENOS AIRES                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19130, N'CAJIBIO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19137, N'CALDONO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19142, N'CALOTO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19212, N'CORINTO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19256, N'EL TAMBO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19290, N'FLORENCIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19318, N'GUAPI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19355, N'INZA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19364, N'JAMBALO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19392, N'LA SIERRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19397, N'LA VEGA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19418, N'LOPEZ                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19450, N'MERCADERES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19455, N'MIRANDA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19473, N'MORALES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19513, N'PADILLA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19517, N'PAEZ                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19532, N'PATIA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19533, N'PIAMONTE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19548, N'PIENDAMO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19573, N'PUERTO TEJADA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19585, N'PURACE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19622, N'ROSAS                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19693, N'SAN SEBASTIAN                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19698, N'SANTANDER DE QUILICHAO                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19701, N'SANTA ROSA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19743, N'SILVIA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19760, N'SOTARA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19780, N'SUAREZ                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19785, N'SUCRE                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19807, N'TIMBIO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19809, N'TIMBIQUI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19821, N'TORIBIO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19824, N'TOTORO                                            ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (19845, N'VILLA RICA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20001, N'VALLEDUPAR                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20011, N'AGUACHICA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20013, N'AGUSTIN CODAZZI                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20032, N'ASTREA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20045, N'BECERRIL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20060, N'BOSCONIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20175, N'CHIMICHAGUA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20178, N'CHIRIGUANA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20228, N'CURUMANI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20238, N'EL COPEY                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20250, N'EL PASO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20295, N'GAMARRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20310, N'GONZALEZ                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20383, N'LA GLORIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20400, N'LA JAGUA DE IBIRICO                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20443, N'MANAURE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20517, N'PAILITAS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20550, N'PELAYA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20570, N'PUEBLO BELLO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20614, N'RIO DE ORO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20621, N'LA PAZ                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20710, N'SAN ALBERTO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20750, N'SAN DIEGO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20770, N'SAN MARTIN                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (20787, N'TAMALAMEQUE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23001, N'MONTERIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23068, N'AYAPEL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23079, N'BUENAVISTA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23090, N'CANALETE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23162, N'CERETE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23168, N'CHIMA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23182, N'CHINU                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23189, N'CIENAGA DE ORO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23300, N'COTORRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23350, N'LA APARTADA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23417, N'LORICA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23419, N'LOS CORDOBAS                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23464, N'MOMIL                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23466, N'MONTELIBANO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23500, N'MOÑITOS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23555, N'PLANETA RICA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23570, N'PUEBLO NUEVO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23574, N'PUERTO ESCONDIDO                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23580, N'PUERTO LIBERTADOR                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23586, N'PURISIMA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23660, N'SAHAG/N                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23670, N'SAN ANDRES SOTAVENTO                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23672, N'SAN ANTERO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23675, N'SAN BERNARDO DEL VIENTO                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23678, N'SAN CARLOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23686, N'SAN PELAYO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23807, N'TIERRALTA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (23855, N'VALENCIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25001, N'AGUA DE DIOS                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25019, N'ALBAN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25035, N'ANAPOIMA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25040, N'ANOLAIMA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25053, N'ARBELAEZ                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25086, N'BELTRAN                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25095, N'BITUIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25099, N'BOJACA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25120, N'CABRERA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25123, N'CACHIPAY                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25126, N'CAJICA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25148, N'CAPARRAPI                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25151, N'CAQUEZA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25154, N'CARMEN DE CARUPA                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25168, N'CHAGUANI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25175, N'CHIA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25178, N'CHIPAQUE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25181, N'CHOACHI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25183, N'CHOCONTA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25200, N'COGUA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25214, N'COTA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25224, N'CUCUNUBA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25245, N'EL COLEGIO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25258, N'EL PEÑON                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25260, N'EL ROSAL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25269, N'FACATATIVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25279, N'FOMEQUE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25281, N'FOSCA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25286, N'FUNZA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25288, N'F/QUENE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25290, N'FUSAGASUGA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25293, N'GACHALA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25295, N'GACHANCIPA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25297, N'GACHETA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25299, N'GAMA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25307, N'GIRARDOT                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25312, N'GRANADA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25317, N'GUACHETA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25320, N'GUADUAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25322, N'GUASCA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25324, N'GUATAQUI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25326, N'GUATAVITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25328, N'GUAYABAL DE SIQUIMA                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25335, N'GUAYABETAL                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25339, N'GUTIERREZ                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25368, N'JERUSALEN                                         ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25372, N'JUNIN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25377, N'LA CALERA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25386, N'LA MESA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25394, N'LA PALMA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25398, N'LA PEÑA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25402, N'LA VEGA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25407, N'LENGUAZAQUE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25426, N'MACHETA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25430, N'MADRID                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25436, N'MANTA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25438, N'MEDINA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25473, N'MOSQUERA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25483, N'NARIÑO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25486, N'NEMOCON                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25488, N'NILO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25489, N'NIMAIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25491, N'NOCAIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25506, N'VENECIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25513, N'PACHO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25518, N'PAIME                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25524, N'PANDI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25530, N'PARATEBUENO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25535, N'PASCA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25572, N'PUERTO SALGAR                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25580, N'PULI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25592, N'QUEBRADANEGRA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25594, N'QUETAME                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25596, N'QUIPILE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25599, N'APULO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25612, N'RICAURTE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25645, N'SAN ANTONIO DEL TEQUENDAMA                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25649, N'SAN BERNARDO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25653, N'SAN CAYETANO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25658, N'SAN FRANCISCO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25662, N'SAN JUAN DE RIO SECO                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25718, N'SASAIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25736, N'SESQUILE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25740, N'SIBATE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25743, N'SILVANIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25745, N'SIMIJACA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25754, N'SOACHA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25758, N'SOPO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25769, N'SUBACHOQUE                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25772, N'SUESCA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25777, N'SUPATA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25779, N'SUSA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25781, N'SUTATAUSA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25785, N'TABIO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25793, N'TAUSA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25797, N'TENA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25799, N'TENJO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25805, N'TIBACUY                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25807, N'TIBIRITA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25815, N'TOCAIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25817, N'TOCANCIPA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25823, N'TOPAIPI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25839, N'UBALA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25841, N'UBAQUE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25843, N'VILLA DE SAN DIEGO DE UBATE                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25845, N'UNE                                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25851, N'UTICA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25862, N'VERGARA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25867, N'VIANI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25871, N'VILLAGOMEZ                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25873, N'VILLAPINZON                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25875, N'VILLETA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25878, N'VIOTA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25885, N'YACOPI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25898, N'ZIPACON                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (25899, N'ZIPAQUIRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27001, N'QUIBDO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27006, N'ACANDI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27025, N'ALTO BAUDO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27050, N'ATRATO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27073, N'BAGADO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27075, N'BAHIA SOLANO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27077, N'BAJO BAUDO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27086, N'BELEN DE BAJIRA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27099, N'BOJAYA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27135, N'EL CANTON DEL SAN PABLO                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27150, N'CARMEN DEL DARIEN                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27160, N'CERTEGUI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27205, N'CONDOTO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27245, N'EL CARMEN DE ATRATO                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27250, N'EL LITORAL DEL SAN JUAN                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27361, N'ISTMINA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27372, N'JURADO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27413, N'LLORO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27425, N'MEDIO ATRATO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27430, N'MEDIO BAUDO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27450, N'MEDIO SAN JUAN                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27491, N'NOVITA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27495, N'NUQUI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27580, N'RIO IRO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27600, N'RIO QUITO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27615, N'RIOSUCIO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27660, N'SAN JOSE DEL PALMAR                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27745, N'SIPI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27787, N'TADO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27800, N'UNGUIA                                            ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (27810, N'UNION PANAMERICANA                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41001, N'NEIVA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41006, N'ACEVEDO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41013, N'AGRADO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41016, N'AIPE                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41020, N'ALGECIRAS                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41026, N'ALTAMIRA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41078, N'BARAYA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41132, N'CAMPOALEGRE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41206, N'COLOMBIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41244, N'ELIAS                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41298, N'GARZON                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41306, N'GIGANTE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41319, N'GUADALUPE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41349, N'HOBO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41357, N'IQUIRA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41359, N'ISNOS                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41378, N'LA ARGENTINA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41396, N'LA PLATA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41483, N'NATAGA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41503, N'OPORAPA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41518, N'PAICOL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41524, N'PALERMO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41530, N'PALESTINA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41548, N'PITAL                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41551, N'PITALITO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41615, N'RIVERA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41660, N'SALADOBLANCO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41668, N'SAN AGUSTIN                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41676, N'SANTA MARIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41770, N'SUAZA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41791, N'TARQUI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41797, N'TESALIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41799, N'TELLO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41801, N'TERUEL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41807, N'TIMANA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41872, N'VILLAVIEJA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (41885, N'YAGUARA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44001, N'RIOHACHA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44035, N'ALBANIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44078, N'BARRANCAS                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44090, N'DIBULLA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44098, N'DISTRACCION                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44110, N'EL MOLINO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44279, N'FONSECA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44378, N'HATONUEVO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44420, N'LA JAGUA DEL PILAR                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44430, N'MAICAO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44560, N'MANAURE                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44650, N'SAN JUAN DEL CESAR                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44847, N'URIBIA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44855, N'URUMITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (44874, N'VILLANUEVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47001, N'SANTA MARTA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47030, N'ALGARROBO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47053, N'ARACATACA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47058, N'ARIGUANI                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47161, N'CERRO SAN ANTONIO                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47170, N'CHIBOLO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47189, N'CIENAGA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47205, N'CONCORDIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47245, N'EL BANCO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47258, N'EL PIÑON                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47268, N'EL RETEN                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47288, N'FUNDACION                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47318, N'GUAMAL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47460, N'NUEVA GRANADA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47541, N'PEDRAZA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47545, N'PIJIÑO DEL CARMEN                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47551, N'PIVIJAY                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47555, N'PLATO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47570, N'PUEBLOVIEJO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47605, N'REMOLINO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47660, N'SABANAS DE SAN ANGEL                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47675, N'SALAMINA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47692, N'SAN SEBASTIAN DE BUENAVISTA                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47703, N'SAN ZENON                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47707, N'SANTA ANA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47720, N'SANTA BARBARA DE PINTO                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47745, N'SITIONUEVO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47798, N'TENERIFE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47960, N'ZAPAYAN                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (47980, N'ZONA BANANERA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50001, N'VILLAVICENCIO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50006, N'ACACIAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50110, N'BARRANCA DE UPIA                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50124, N'CABUYARO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50150, N'CASTILLA LA NUEVA                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50223, N'CUBARRAL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50226, N'CUMARAL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50245, N'EL CALVARIO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50251, N'EL CASTILLO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50270, N'EL DORADO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50287, N'FUENTE DE ORO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50313, N'GRANADA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50318, N'GUAMAL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50325, N'MAPIRIPAN                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50330, N'MESETAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50350, N'LA MACARENA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50370, N'URIBE                                             ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50400, N'LEJANIAS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50450, N'PUERTO CONCORDIA                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50568, N'PUERTO GAITAN                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50573, N'PUERTO LOPEZ                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50577, N'PUERTO LLERAS                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50590, N'PUERTO RICO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50606, N'RESTREPO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50680, N'SAN CARLOS DE GUAROA                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50683, N'SAN JUAN DE ARAMA                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50686, N'SAN JUANITO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50689, N'SAN MARTIN                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (50711, N'VISTAHERMOSA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52001, N'PASTO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52019, N'ALBAN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52022, N'ALDANA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52036, N'ANCUYA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52051, N'ARBOLEDA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52079, N'BARBACOAS                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52083, N'BELEN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52110, N'BUESACO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52203, N'COLON                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52207, N'CONSACA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52210, N'CONTADERO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52215, N'CORDOBA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52224, N'CUASPUD                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52227, N'CUMBAL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52233, N'CUMBITARA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52240, N'CHACHAGÜI                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52250, N'EL CHARCO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52254, N'EL PEÑOL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52256, N'EL ROSARIO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52258, N'EL TABLON DE GOMEZ                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52260, N'EL TAMBO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52287, N'FUNES                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52317, N'GUACHUCAL                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52320, N'GUAITARILLA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52323, N'GUALMATAN                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52352, N'ILES                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52354, N'IMUES                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52356, N'IPIALES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52378, N'LA CRUZ                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52381, N'LA FLORIDA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52385, N'LA LLANADA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52390, N'LA TOLA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52399, N'LA UNION                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52405, N'LEIVA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52411, N'LINARES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52418, N'LOS ANDES                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52427, N'MAGÜI                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52435, N'MALLAMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52473, N'MOSQUERA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52480, N'NARIÑO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52490, N'OLAYA HERRERA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52506, N'OSPINA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52520, N'FRANCISCO PIZARRO                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52540, N'POLICARPA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52560, N'POTOSI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52565, N'PROVIDENCIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52573, N'PUERRES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52585, N'PUPIALES                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52612, N'RICAURTE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52621, N'ROBERTO PAYAN                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52678, N'SAMANIEGO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52683, N'SANDONA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52685, N'SAN BERNARDO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52687, N'SAN LORENZO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52693, N'SAN PABLO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52694, N'SAN PEDRO DE CARTAGO                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52696, N'SANTA BARBARA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52699, N'SANTACRUZ                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52720, N'SAPUYES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52786, N'TAMINANGO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52788, N'TANGUA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52835, N'TUMACO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52838, N'TUQUERRES                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (52885, N'YACUANQUER                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54001, N'C/CUTA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54003, N'ABREGO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54051, N'ARBOLEDAS                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54099, N'BOCHALEMA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54109, N'BUCARASICA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54125, N'CACOTA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54128, N'CACHIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54172, N'CHINACOTA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54174, N'CHITAGA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54206, N'CONVENCION                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54223, N'CUCUTILLA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54239, N'DURANIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54245, N'EL CARMEN                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54250, N'EL TARRA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54261, N'EL ZULIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54313, N'GRAMALOTE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54344, N'HACARI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54347, N'HERRAN                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54377, N'LABATECA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54385, N'LA ESPERANZA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54398, N'LA PLAYA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54405, N'LOS PATIOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54418, N'LOURDES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54480, N'MUTISCUA                                          ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54498, N'OCAÑA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54518, N'PAMPLONA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54520, N'PAMPLONITA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54553, N'PUERTO SANTANDER                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54599, N'RAGONVALIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54660, N'SALAZAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54670, N'SAN CALIXTO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54673, N'SAN CAYETANO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54680, N'SANTIAGO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54720, N'SARDINATA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54743, N'SILOS                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54800, N'TEORAMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54810, N'TIBU                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54820, N'TOLEDO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54871, N'VILLA CARO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (54874, N'VILLA DEL ROSARIO                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63001, N'ARMENIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63111, N'BUENAVISTA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63130, N'CALARCA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63190, N'CIRCASIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63212, N'CORDOBA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63272, N'FILANDIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63302, N'GENOVA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63401, N'LA TEBAIDA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63470, N'MONTENEGRO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63548, N'PIJAO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63594, N'QUIMBAYA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (63690, N'SALENTO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66001, N'PEREIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66045, N'APIA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66075, N'BALBOA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66088, N'BELEN DE UMBRIA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66170, N'DOSQUEBRADAS                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66318, N'GUATICA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66383, N'LA CELIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66400, N'LA VIRGINIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66440, N'MARSELLA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66456, N'MISTRATO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66572, N'PUEBLO RICO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66594, N'QUINCHIA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66682, N'SANTA ROSA DE CABAL                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (66687, N'SANTUARIO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68001, N'BUCARAMANGA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68013, N'AGUADA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68020, N'ALBANIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68051, N'ARATOCA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68077, N'BARBOSA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68079, N'BARICHARA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68081, N'BARRANCABERMEJA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68092, N'BETULIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68101, N'BOLIVAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68121, N'CABRERA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68132, N'CALIFORNIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68147, N'CAPITANEJO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68152, N'CARCASI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68160, N'CEPITA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68162, N'CERRITO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68167, N'CHARALA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68169, N'CHARTA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68176, N'CHIMA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68179, N'CHIPATA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68190, N'CIMITARRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68207, N'CONCEPCION                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68209, N'CONFINES                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68211, N'CONTRATACION                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68217, N'COROMORO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68229, N'CURITI                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68235, N'EL CARMEN DE CHUCURI                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68245, N'EL GUACAMAYO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68250, N'EL PEÑON                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68255, N'EL PLAYON                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68264, N'ENCINO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68266, N'ENCISO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68271, N'FLORIAN                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68276, N'FLORIDABLANCA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68296, N'GALAN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68298, N'GAMBITA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68307, N'GIRON                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68318, N'GUACA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68320, N'GUADALUPE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68322, N'GUAPOTA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68324, N'GUAVATA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68327, N'GÜEPSA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68344, N'HATO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68368, N'JES/S MARIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68370, N'JORDAN                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68377, N'LA BELLEZA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68385, N'LANDAZURI                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68397, N'LA PAZ                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68406, N'LEBRIJA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68418, N'LOS SANTOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68425, N'MACARAVITA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68432, N'MALAGA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68444, N'MATANZA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68464, N'MOGOTES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68468, N'MOLAGAVITA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68498, N'OCAMONTE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68500, N'OIBA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68502, N'ONZAGA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68522, N'PALMAR                                            ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68524, N'PALMAS DEL SOCORRO                                ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68533, N'PARAMO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68547, N'PIEDECUESTA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68549, N'PINCHOTE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68572, N'PUENTE NACIONAL                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68573, N'PUERTO PARRA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68575, N'PUERTO WILCHES                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68615, N'RIONEGRO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68655, N'SABANA DE TORRES                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68669, N'SAN ANDRES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68673, N'SAN BENITO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68679, N'SAN GIL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68682, N'SAN JOAQUIN                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68684, N'SAN JOSE DE MIRANDA                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68686, N'SAN MIGUEL                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68689, N'SAN VICENTE DE CHUCURI                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68705, N'SANTA BARBARA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68720, N'SANTA HELENA DEL OPON                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68745, N'SIMACOTA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68755, N'SOCORRO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68770, N'SUAITA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68773, N'SUCRE                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68780, N'SURATA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68820, N'TONA                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68855, N'VALLE DE SAN JOSE                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68861, N'VELEZ                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68867, N'VETAS                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68872, N'VILLANUEVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (68895, N'ZAPATOCA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70001, N'SINCELEJO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70110, N'BUENAVISTA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70124, N'CAIMITO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70204, N'COLOSO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70215, N'COROZAL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70221, N'COVEÑAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70230, N'CHALAN                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70233, N'EL ROBLE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70235, N'GALERAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70265, N'GUARANDA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70400, N'LA UNION                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70418, N'LOS PALMITOS                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70429, N'MAJAGUAL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70473, N'MORROA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70508, N'OVEJAS                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70523, N'PALMITO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70670, N'SAMPUES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70678, N'SAN BENITO ABAD                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70702, N'SAN JUAN DE BETULIA                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70708, N'SAN MARCOS                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70713, N'SAN ONOFRE                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70717, N'SAN PEDRO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70742, N'SINCE                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70771, N'SUCRE                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70820, N'SANTIAGO DE TOLU                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (70823, N'TOLUVIEJO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73001, N'IBAGUE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73024, N'ALPUJARRA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73026, N'ALVARADO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73030, N'AMBALEMA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73043, N'ANZOATEGUI                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73055, N'ARMERO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73067, N'ATACO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73124, N'CAJAMARCA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73148, N'CARMEN DE APICALA                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73152, N'CASABIANCA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73168, N'CHAPARRAL                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73200, N'COELLO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73217, N'COYAIMA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73226, N'CUNDAY                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73236, N'DOLORES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73268, N'ESPINAL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73270, N'FALAN                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73275, N'FLANDES                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73283, N'FRESNO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73319, N'GUAMO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73347, N'HERVEO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73349, N'HONDA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73352, N'ICONONZO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73408, N'LERIDA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73411, N'LIBANO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73443, N'MARIQUITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73449, N'MELGAR                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73461, N'MURILLO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73483, N'NATAGAIMA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73504, N'ORTEGA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73520, N'PALOCABILDO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73547, N'PIEDRAS                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73555, N'PLANADAS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73563, N'PRADO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73585, N'PURIFICACION                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73616, N'RIOBLANCO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73622, N'RONCESVALLES                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73624, N'ROVIRA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73671, N'SALDAÑA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73675, N'SAN ANTONIO                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73678, N'SAN LUIS                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73686, N'SANTA ISABEL                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73770, N'SUAREZ                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73854, N'VALLE DE SAN JUAN                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73861, N'VENADILLO                                         ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73870, N'VILLAHERMOSA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (73873, N'VILLARRICA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76001, N'CALI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76020, N'ALCALA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76036, N'ANDALUCIA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76041, N'ANSERMANUEVO                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76054, N'ARGELIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76100, N'BOLIVAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76109, N'BUENAVENTURA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76111, N'GUADALAJARA DE BUGA                               ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76113, N'BUGALAGRANDE                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76122, N'CAICEDONIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76126, N'CALIMA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76130, N'CANDELARIA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76147, N'CARTAGO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76233, N'DAGUA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76243, N'EL AGUILA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76246, N'EL CAIRO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76248, N'EL CERRITO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76250, N'EL DOVIO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76275, N'FLORIDA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76306, N'GINEBRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76318, N'GUACARI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76364, N'JAMUNDI                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76377, N'LA CUMBRE                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76400, N'LA UNION                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76403, N'LA VICTORIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76497, N'OBANDO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76520, N'PALMIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76563, N'PRADERA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76606, N'RESTREPO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76616, N'RIOFRIO                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76622, N'ROLDANILLO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76670, N'SAN PEDRO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76736, N'SEVILLA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76823, N'TORO                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76828, N'TRUJILLO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76834, N'TULUA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76845, N'ULLOA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76863, N'VERSALLES                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76869, N'VIJES                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76890, N'YOTOCO                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76892, N'YUMBO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (76895, N'ZARZAL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81001, N'ARAUCA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81065, N'ARAUQUITA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81220, N'CRAVO NORTE                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81300, N'FORTUL                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81591, N'PUERTO RONDON                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81736, N'SARAVENA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (81794, N'TAME                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85001, N'YOPAL                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85010, N'AGUAZUL                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85015, N'CHAMEZA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85125, N'HATO COROZAL                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85136, N'LA SALINA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85139, N'MANI                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85162, N'MONTERREY                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85225, N'NUNCHIA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85230, N'OROCUE                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85250, N'PAZ DE ARIPORO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85263, N'PORE                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85279, N'RECETOR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85300, N'SABANALARGA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85315, N'SACAMA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85325, N'SAN LUIS DE PALENQUE                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85400, N'TAMARA                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85410, N'TAURAMENA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85430, N'TRINIDAD                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (85440, N'VILLANUEVA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86001, N'MOCOA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86219, N'COLON                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86320, N'ORITO                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86568, N'PUERTO ASIS                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86569, N'PUERTO CAICEDO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86571, N'PUERTO GUZMAN                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86573, N'LEGUIZAMO                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86749, N'SIBUNDOY                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86755, N'SAN FRANCISCO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86757, N'SAN MIGUEL                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86760, N'SANTIAGO                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86865, N'VALLE DEL GUAMUEZ                                 ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (86885, N'VILLAGARZON                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (88001, N'SAN ANDRES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (88564, N'PROVIDENCIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91011, N'leticia')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91263, N'EL ENCANTO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91405, N'LA CHORRERA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91407, N'LA PEDRERA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91430, N'LA VICTORIA                                       ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91460, N'MIRITI - PARANA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91530, N'PUERTO ALEGRIA                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91536, N'PUERTO ARICA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91540, N'PUERTO NARIÑO                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91669, N'PUERTO SANTANDER                                  ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (91798, N'TARAPACA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94001, N'INIRIDA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94343, N'BARRANCO MINAS                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94663, N'MAPIRIPANA                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94883, N'SAN FELIPE                                        ')
+GO
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94884, N'PUERTO COLOMBIA                                   ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94885, N'LA GUADALUPE                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94886, N'CACAHUAL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94887, N'PANA PANA                                         ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (94888, N'MORICHAL                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (95001, N'SAN JOSE DEL GUAVIARE                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (95015, N'CALAMAR                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (95025, N'EL RETORNO                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (95200, N'MIRAFLORES                                        ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97001, N'MITU                                              ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97161, N'CARURU                                            ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97511, N'PACOA                                             ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97666, N'TARAIRA                                           ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97777, N'PAPUNAUA                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (97889, N'YAVARATE                                          ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (99001, N'PUERTO CARREÑO                                    ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (99524, N'LA PRIMAVERA                                      ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (99624, N'SANTA ROSALIA                                     ')
+INSERT [dbo].[Ciudades] ([IDCiudad], [NombreC]) VALUES (99773, N'CUMARIBO                                          ')
+
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000001, N'Julian', N'Argàez', N'Buenos Aires', N'j0309arg@gmail.com', 2283189, 5001)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000002, N'Laura', N'Vèlez', N'Cestillal', N'laura18.argaez@gmail.com', 3004062, 5079)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000003, N'Fredy', N'Ossa', N'La Fe', N'fredy22adolfo@outlook.com', 3023664, 5091)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000004, N'Eunice', N'Castrillon', N'Guasabra', N'eucas1612@yahoo.com', 3192285, 5042)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000005, N'Ruben', N'Adolfo', N'La Sierrilla', N'ruben1993@outlook.com', 3012731, 5120)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000006, N'Manuel', N'Zapata', N'Los Abades', N'manzata02@yahoo.com', 2171213, 5483)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000007, N'Bibiana', N'Castañeda', N'La Margarita', N'bibicastañeda@gmail.com', 3233978, 5642)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000008, N'Camila', N'Osorio', N'Cobadillo', N'cOsorio1004@outlook.com', 3003709, 13600)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000009, N'Cristian', N'Fernandez', N'Bombita', N'fernancris06@yahoo.com', 3046054, 15090)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000010, N'Doris', N'Julieta', N'Calvo Sur', N'dorJulieta@gmail.com', 3203661, 13620)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000011, N'Andrès', N'Felipe', N'La Uribe', N'anfe34@outlook.com', 5396543, 11001)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000012, N'Juan', N'Ardila', N'Centro', N'juancho_Ar30@yahoo.com', 3243002, 8549)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000013, N'Ester', N'Rodas', N'El Edèn', N'rodas0202@gmail.com', 3128928, 8433)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000014, N'Erica', N'Maria', N'Ochalì', N'erima67613@outlook.com', 3145387, 5887)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000015, N'Alberto', N'Rojas', N'Amèrica', N'alberrojas.1@yahoo.com', 5094945, 8001)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000016, N'Maria', N'Valentina', N'El Chuscal', N'valen_03@gmail.com', 3157437, 5847)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000017, N'Nicolas', N'Carvajal', N'Santa Ana', N'Vajal12-7@outlook.com', 3137428, 5686)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000018, N'Omaira', N'Lopez', N'Piedra Verde', N'olopez/08@yahoo.com', 5299691, 5282)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000019, N'Henry', N'Augusto', N'Campo Mar', N'yerri_20@gmail.com', 4335521, 5051)
+INSERT [dbo].[Cliente] ([IDCliente], [Nombre], [Apellido], [Direccion], [Correo], [Telefono], [IDCiudad]) VALUES (1000000020, N'Sandra', N'Olaya', N'Potrerillo', N'olaya.01_Sandra@outlook.com', 4309239, 5353)
+
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (101, 1000000001, CAST(N'2022-04-05' AS Date), 5, 50000.0000, 2000, 100001)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (102, 1000000007, CAST(N'2022-04-06' AS Date), 10, 116000.0000, 4640, 100002)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (103, 1000000002, CAST(N'2022-04-09' AS Date), 7, 280000.0000, 11200, 100004)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (104, 1000000018, CAST(N'2022-04-10' AS Date), 20, 147000.0000, 27930, 100006)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (105, 1000000005, CAST(N'2022-04-11' AS Date), 2, 8000.0000, NULL, 100009)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (106, 1000000009, CAST(N'2022-04-11' AS Date), 4, 24000.0000, NULL, 100010)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (107, 1000000001, CAST(N'2022-04-12' AS Date), 6, 30000.0000, NULL, 100013)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (108, 1000000015, CAST(N'2022-04-13' AS Date), 8, 12000.0000, NULL, 100016)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (109, 1000000008, CAST(N'2022-04-13' AS Date), 3, 21000.0000, NULL, 100017)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (110, 1000000006, CAST(N'2022-04-15' AS Date), 6, 17700.0000, NULL, 100020)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (111, 1000000016, CAST(N'2022-04-16' AS Date), 9, 87300.0000, 3492, 100022)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (112, 1000000010, CAST(N'2022-04-16' AS Date), 12, 56400.0000, 2256, 100024)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (113, 1000000020, CAST(N'2022-04-18' AS Date), 1, 8500.0000, NULL, 100026)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (114, 1000000009, CAST(N'2022-04-24' AS Date), 2, 25400.0000, NULL, 100039)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (115, 1000000002, CAST(N'2022-04-25' AS Date), 3, 22800.0000, NULL, 100044)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (116, 1000000010, CAST(N'2022-04-29' AS Date), 4, 16600.0000, NULL, 100053)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (117, 1000000013, CAST(N'2022-05-01' AS Date), 5, 95000.0000, 3800, 100058)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (118, 1000000003, CAST(N'2022-05-05' AS Date), 6, 56400.0000, 2256, 100065)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (119, 1000000011, CAST(N'2022-05-07' AS Date), 7, 91000.0000, 3640, 100067)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (120, 1000000004, CAST(N'2022-05-11' AS Date), 8, 65600.0000, 2624, 100072)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (121, 1000000006, CAST(N'2022-05-12' AS Date), 9, 113400.0000, 4536, 100076)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (122, 1000000012, CAST(N'2022-05-14' AS Date), 10, 27500.0000, NULL, 100077)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (123, 1000000005, CAST(N'2022-05-15' AS Date), 11, 27500.0000, NULL, 100078)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (124, 1000000004, CAST(N'2022-05-18' AS Date), 12, 93600.0000, 3744, 100086)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (125, 1000000019, CAST(N'2022-05-20' AS Date), 13, 61100.0000, 2444, 100090)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (126, 1000000008, CAST(N'2022-05-21' AS Date), 15, 31500.0000, NULL, 100093)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (127, 1000000007, CAST(N'2022-05-24' AS Date), 10, 22000.0000, NULL, 100097)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (128, 1000000017, CAST(N'2022-05-26' AS Date), 5, 17000.0000, NULL, 100100)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (129, 1000000003, CAST(N'2022-05-27' AS Date), 4, 84000.0000, 3360, 100105)
+INSERT [dbo].[Factura] ([IDFactura], [IDCliente], [FechaVenta], [Cantidad], [ValorVenta], [Descuentos], [IDProducto]) VALUES (130, 1000000014, CAST(N'2022-05-30' AS Date), 2, 1600.0000, NULL, 100118)
+
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100001, N'Axion 500g', 10000.0000, CAST(N'2022-04-01' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100002, N'Aceite 900ml', 11600.0000, CAST(N'2022-04-02' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100003, N'Ajo x3 unds', 1700.0000, CAST(N'2022-04-03' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100004, N'Arroz 25lbs', 40000.0000, CAST(N'2022-04-04' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100005, N'Atun aceite 170g', 5000.0000, CAST(N'2022-04-05' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100006, N'Avena 1000g', 7350.0000, CAST(N'2022-04-06' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100007, N'Azucar blanca 1k', 3700.0000, CAST(N'2022-04-06' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100008, N'Azucar Glass 1k', 3310.0000, CAST(N'2022-04-06' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100009, N'Azucar morena 1k', 4000.0000, CAST(N'2022-04-07' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100010, N'Bicarbonato 500g', 6000.0000, CAST(N'2022-04-07' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100011, N'Blanqueador 2000ml', 2950.0000, CAST(N'2022-04-07' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100012, N'Bombonbum 24unds', 9000.0000, CAST(N'2022-04-08' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100013, N'Bombones Pinpop 24unds', 5000.0000, CAST(N'2022-04-08' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100014, N'Bombones yogueta 24unds', 6500.0000, CAST(N'2022-04-09' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100015, N'Canela en astillas 11g', 2700.0000, CAST(N'2022-04-09' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100016, N'Cepillo de dientes und', 1500.0000, CAST(N'2022-04-09' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100017, N'Crema dental 150ml', 7000.0000, CAST(N'2022-04-09' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100018, N'Canela molida 30g', 5400.0000, CAST(N'2022-04-10' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100019, N'Cebolla cabezona 1k', 3000.0000, CAST(N'2022-04-11' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100020, N'Cebolla de rama 1k', 2950.0000, CAST(N'2022-04-11' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100021, N'Cereal chocokrispis 200g', 4700.0000, CAST(N'2022-04-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100022, N'Cereal froot loops 400g', 9700.0000, CAST(N'2022-04-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100023, N'Cereal quaker aritos 460g', 11700.0000, CAST(N'2022-04-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100024, N'Cereal zucaritas 200g', 4700.0000, CAST(N'2022-04-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100025, N'Choclitos 230g', 5600.0000, CAST(N'2022-04-13' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100026, N'Chocolate nesquik 400g', 8500.0000, CAST(N'2022-04-14' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100027, N'Chocolisto 1000g', 17600.0000, CAST(N'2022-04-14' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100028, N'Chocorramo und', 1850.0000, CAST(N'2022-04-14' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100031, N'Cilantro 1L', 5000.0000, CAST(N'2022-04-15' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100032, N'Ciruela pasa 200g', 11350.0000, CAST(N'2022-04-15' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100033, N'Coca-Cola Mega', 6500.0000, CAST(N'2022-04-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100034, N'Crema de leche 200ml', 1900.0000, CAST(N'2022-04-17' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100035, N'Cuajada 500g', 5300.0000, CAST(N'2022-04-17' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100036, N'Desodorante 75ml', 4500.0000, CAST(N'2022-04-18' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100037, N'Detergente 300g', 17850.0000, CAST(N'2022-04-18' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100038, N'Detodito 250g', 6750.0000, CAST(N'2022-04-19' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100039, N'Frijol cargamanto 1k', 12700.0000, CAST(N'2022-04-20' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100040, N'Frijol verde 1k', 4200.0000, CAST(N'2022-04-20' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100041, N'Galleta Ducales 5tacos', 5200.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100042, N'Galleta Muu 18unds', 3750.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100043, N'Galleta Saltin 5tacos', 4600.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100044, N'Galleta Sultanas 440g', 7600.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100045, N'Galletas Festival 12unds', 9800.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100046, N'Galletas milo 12unds', 8400.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100047, N'Galletas Wafer 18unds', 6400.0000, CAST(N'2022-04-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100048, N'Garbanzo 1k', 5500.0000, CAST(N'2022-04-22' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100049, N'Gaseosa Postobon Mega', 6400.0000, CAST(N'2022-04-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100050, N'Gelatina caja x3 sobres', 3200.0000, CAST(N'2022-04-24' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100051, N'Habichuela 1k', 6300.0000, CAST(N'2022-04-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100052, N'Harina de trigo 1k', 3800.0000, CAST(N'2022-04-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100053, N'Harina Pan 1k', 4150.0000, CAST(N'2022-04-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100054, N'Jabón de baño x3unds', 5600.0000, CAST(N'2022-04-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100055, N'Jabón rey x3unds', 5350.0000, CAST(N'2022-04-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100056, N'Jamón 167g', 5550.0000, CAST(N'2022-04-27' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100057, N'Leche condensada 300g', 4000.0000, CAST(N'2022-04-27' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100058, N'Leche en polvo entera 1000g', 19000.0000, CAST(N'2022-04-27' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100059, N'Leche liquida descremada 900ml', 3100.0000, CAST(N'2022-04-27' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100060, N'Leche liquida entera 900ml', 3000.0000, CAST(N'2022-04-27' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100061, N'Lentejas 1k', 6400.0000, CAST(N'2022-04-28' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100062, N'Limón mandarino 1k', 3500.0000, CAST(N'2022-04-29' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100063, N'Limón taiti 1k', 2000.0000, CAST(N'2022-04-29' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100064, N'Molipollo 500g', 5000.0000, CAST(N'2022-04-30' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100065, N'Maicitos 12unds', 9400.0000, CAST(N'2022-05-01' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100066, N'Mango 1k', 2600.0000, CAST(N'2022-05-02' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100067, N'Mantequilla 454g', 13000.0000, CAST(N'2022-05-03' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100068, N'Manzana 1k', 7400.0000, CAST(N'2022-05-04' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100069, N'Mayonesa 500g', 2500.0000, CAST(N'2022-05-05' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100070, N'Mazorca 1k', 3500.0000, CAST(N'2022-05-06' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100071, N'Mermelada 300g', 5000.0000, CAST(N'2022-05-07' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100072, N'Miel 350g', 8200.0000, CAST(N'2022-05-07' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100073, N'Mortadela 225g', 2200.0000, CAST(N'2022-05-08' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100074, N'Mostaza 400g', 3200.0000, CAST(N'2022-05-08' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100075, N'Nutella 350g', 7000.0000, CAST(N'2022-05-08' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100076, N'Papel higiénico 12unds', 12600.0000, CAST(N'2022-05-09' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100077, N'Pan tajado 450g', 2750.0000, CAST(N'2022-05-10' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100078, N'Papa capira 1k', 2500.0000, CAST(N'2022-05-11' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100079, N'Papas margarita 115g', 2800.0000, CAST(N'2022-05-11' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100080, N'Papel aluminio 13m', 5000.0000, CAST(N'2022-05-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100081, N'Pastas 250g', 2000.0000, CAST(N'2022-05-12' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100082, N'Pimentón 1k', 5500.0000, CAST(N'2022-05-13' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100083, N'Plátano pintón 1k', 1400.0000, CAST(N'2022-05-13' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100084, N'Plátano verde 1k', 2500.0000, CAST(N'2022-05-13' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100085, N'Quesito 400g', 7800.0000, CAST(N'2022-05-14' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100086, N'Queso motzarella 400g', 7800.0000, CAST(N'2022-05-14' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100087, N'Rosquillas 12unds', 11800.0000, CAST(N'2022-05-15' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100088, N'Salchicha ranchera 131g', 4500.0000, CAST(N'2022-05-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100089, N'Salchicha tradicional 450g', 5100.0000, CAST(N'2022-05-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100090, N'Salchichón 500g', 4700.0000, CAST(N'2022-05-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100091, N'Salsa de tomate 550g', 2600.0000, CAST(N'2022-05-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100092, N'Salsa rosada 400g', 2700.0000, CAST(N'2022-05-16' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100093, N'Seda dental 50m', 2100.0000, CAST(N'2022-05-17' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100094, N'Sal 1k', 1650.0000, CAST(N'2022-05-18' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100095, N'Tomate de aliño 1k', 2200.0000, CAST(N'2022-05-19' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100096, N'Tomate de árbol 1k', 2800.0000, CAST(N'2022-05-19' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100097, N'Tostadas 100g', 2200.0000, CAST(N'2022-05-20' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100098, N'Vinagre blanco 1000ml', 2600.0000, CAST(N'2022-05-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100099, N'Vinagre de manzana 1000ml', 4000.0000, CAST(N'2022-05-21' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100100, N'Yuca 1k', 3400.0000, CAST(N'2022-05-22' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100101, N'Zanahoria 1k', 1500.0000, CAST(N'2022-05-22' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100102, N'Pañales etapa 0 30unds', 11700.0000, CAST(N'2022-05-23' AS Date))
+GO
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100103, N'Pañales etapa 1 30unds', 13200.0000, CAST(N'2022-05-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100104, N'Pañales etapa 2 30unds', 17000.0000, CAST(N'2022-05-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100105, N'Pañales etapa 3 30unds', 21000.0000, CAST(N'2022-05-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100106, N'Pañales etapa 4 30unds', 24000.0000, CAST(N'2022-05-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100107, N'Pañales etapa 5 30unds', 28000.0000, CAST(N'2022-05-23' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100108, N'Listerine 360ml', 10000.0000, CAST(N'2022-05-24' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100109, N'Listerine 500ml', 6000.0000, CAST(N'2022-05-24' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100110, N'Toallas maternas 10unds', 19600.0000, CAST(N'2022-05-24' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100111, N'Pañitos 100 unds', 9800.0000, CAST(N'2022-05-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100112, N'Pañitos 110 unds', 11900.0000, CAST(N'2022-05-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100113, N'Pañitos 120 unds', 14600.0000, CAST(N'2022-05-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100114, N'Toallas femeninas x12unds', 2600.0000, CAST(N'2022-05-25' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100115, N'Acondicionador savital sobre ', 1000.0000, CAST(N'2022-05-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100116, N'Acondicionador sedal sobre', 1000.0000, CAST(N'2022-05-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100117, N'Shampoo savital sobre ', 800.0000, CAST(N'2022-05-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100118, N'Shampoo sedal sobre', 800.0000, CAST(N'2022-05-26' AS Date))
+INSERT [dbo].[Productos] ([IDProducto], [NombreProducto], [Valor], [FechaEntrada]) VALUES (100119, N'Huevos x30', 16000.0000, CAST(N'2022-05-27' AS Date))
+ALTER TABLE [dbo].[Cliente]  WITH CHECK ADD FOREIGN KEY([IDCiudad])
+REFERENCES [dbo].[Ciudades] ([IDCiudad])
+GO
+ALTER TABLE [dbo].[Factura]  WITH CHECK ADD  CONSTRAINT [FK_Factura_Cliente] FOREIGN KEY([IDCliente])
+REFERENCES [dbo].[Cliente] ([IDCliente])
+GO
+ALTER TABLE [dbo].[Factura] CHECK CONSTRAINT [FK_Factura_Cliente]
+GO
+ALTER TABLE [dbo].[Factura]  WITH CHECK ADD  CONSTRAINT [FK_Factura_Productos] FOREIGN KEY([IDProducto])
+REFERENCES [dbo].[Productos] ([IDProducto])
+GO
+ALTER TABLE [dbo].[Factura] CHECK CONSTRAINT [FK_Factura_Productos]
+GO
+USE [master]
+GO
+ALTER DATABASE [Tienda Don Jose] SET  READ_WRITE 
+GO
+
+/*  Creación de una tabla */
+
+CREATE TABLE Ciudades(
+	IDCiudad int PRIMARY KEY NOT NULL,
+	NombreC varchar (50) NOT NULL,
+
+)
+
+/*   Relacionar tablas */
+
+ALTER TABLE Cliente
+ADD FOREIGN KEY (IDCiudad) REFERENCES Ciudades (IDCiudad)
+
+/*  Insertar datos  */
+
+insert into Productos (IDProducto,NombreProducto,Valor,FechaEntrada)
+Values ('100119','Huevos','16000','2022/05/27')
+
+
+insert into Productos (IDProducto,NombreProducto,Valor,FechaEntrada)
+Values ('10020','Naranja 1k','7400','2022/05/27')
+
+/*  Consultar datos de las tablas
+
+	Para consultar los datos ingresados en una tablas usamos 
+	
+	SELECT * FROM nombredelatabla
+	el asteristco indica que se van a visualizar todos los campos
+
+  */
+  
+ SELECT * FROM Cliente
+ 
+ SELECT * FROM PRODUCTOS
+ 
+/* Consulta donde visualizaremos algunoos campos de la tabla 
+
+	SELECT campo_1, campo_2. campo_n 
+	FROM nombredelatabla
+
+*/
+
+ 
+select IDCliente,Nombre,Telefono,IDCiudad
+from Cliente
+ 
+ 
+ 
+ /*  ELIMINACION DE TABLA 
+ 
+	Para eliminar una tabla usamos el comando
+	
+	DROP TABLE nombredelatabla
+	
+	siempre y cuando la tabla no tenga relacion con otra y la tabla 
+	a borrar no tenga datos
+ */
+ 
+ DROP TABLE pais
+ 
+ 
+ /*  Eliminar un dato o varios datos de una tabla
+ 
+	Usamos el siguiente comando para borrar todos los datos de una tabla (todos los registros existentes)
+	
+	DELETE FROM nombredelatabla
+	
+	Y para borrar un dato de una tabla (siempre que el registro que cumpla con una condición)
+	DELETE FROM nombredelatabla
+	WHERE campodelatabla=datoaborrar
+	*/
+ 
+delete from Factura
+
+delete from Productos
+where IDProducto='10020'
+
+
+/* otros ejemplos realizados con las tablas  */
+
+/*consultas a 2 tablas*/
+select Clie.IDCliente as Codigo, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC as Ciudad 
+/*aqui hago un select para visualizar los campos de la tabla cliente (idcliente, nombre, apellido y direccion)
+ y de tabla ciudad me va a visualizar el campo nombreC(nombre de la ciudad) */
+from Cliente Clie, Ciudades Ciud
+/*desde la tabla cliente (Clie) y la tabla Ciudades (Ciud) 
+  al definir Cliente Clie es como decir que la tabla cliente se llama por medio de esta variable Clie o
+  puedo poner por ejemplo una letra donde quedaria asi: from Cliente A, Ciudades B y cada campo debo  
+  identificarle con la tabla que pertenece  asi
+  select A.Idcliente, A.Nombre, A.Apellido, A.Direccion, B.NombreC */
+where Clie.IDCiudad = Ciud.IDCiudad
+/*donde comparo que el idciudad de la tabla cliente(Clie) sea igual a idciudad de la tabla ciudades (Ciud) */
+
+/*select ordenado por apellidos o por nombre e incluso por ciudades*/
+/*Ordenado por nombre*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.IDCiudad = Ciud.IDCiudad
+order by Nombre
+
+--order by Nombre
+/*Ordenado por apellido*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.IDCiudad = Ciud.IDCiudad
+order by Apellido
+
+/*Ordenado por ciudades por defecto es ascendente*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.IDCiudad = Ciud.IDCiudad
+order by NombreC 
+
+/*Ordenado por ciudades ascendente*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.IDCiudad = Ciud.IDCiudad
+order by NombreC ASC
+
+/*Ordenado por ciudades descendente*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.IDCiudad = Ciud.IDCiudad
+order by NombreC DESC
+
+/*Consulto un cliente que el nombre inicie con la letra E 
+  en este caso nos va a visualizar 3 clientes*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.Nombre LIKE 'E%' and Clie.IDCiudad=Ciud.IDCiudad
+
+/*Consulto un cliente que el nombre finalice con la letra e 
+  en este caso nos va a visualizar 1 cliente*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.Nombre LIKE '%e' and Clie.IDCiudad=Ciud.IDCiudad
+
+/*Consulto un cliente que el nombre tengan la letra e 
+  en este caso nos va a visualizar 8 clientes*/
+select Clie.IDCliente, Clie.Nombre, Clie.Apellido, Clie.Direccion, Ciud.NombreC  
+from Cliente Clie, Ciudades Ciud
+where Clie.Nombre LIKE '%e%' and Clie.IDCiudad=Ciud.IDCiudad
+
+
+/*consulta de datos segun lo que compro cada cliente
+  aqui hacemos la consulta de tres tablas cliente, factura y productos*/
+Select cli.IDCliente,cli.Nombre, cli.Apellido, fac.IDFactura, fac.FechaVenta, prod.NombreProducto, fac.Cantidad, prod.Valor, fac.ValorVenta
+from Cliente cli,Factura fac, Productos prod
+where cli.IDCliente=fac.IDCliente and prod.IDProducto=fac.IDProducto
+
+/*consulta de datos compras realizadas por un determinado cliente
+  vamos a consultar las compras del cliente Julian Argáez*/
+Select cli.IDCliente,cli.Nombre, cli.Apellido, fac.IDFactura, fac.FechaVenta, prod.NombreProducto, fac.Cantidad, prod.Valor, fac.ValorVenta
+from Cliente cli,Factura fac, Productos prod
+where cli.IDCliente='1000000001' and fac.IDCliente='1000000001' and prod.IDProducto=fac.IDProducto
+
+/*consulta de 4 tablas cliente, ciudad, producto y factura*/
+Select cli.IDCliente,cli.Nombre, cli.Apellido,ciud.NombreC, fac.IDFactura, fac.FechaVenta, prod.NombreProducto, fac.Cantidad, prod.Valor, fac.ValorVenta
+from Cliente cli,Factura fac, Productos prod, Ciudades ciud
+where cli.IDCliente='1000000001' and fac.IDCliente='1000000001' and prod.IDProducto=fac.IDProducto and cli.IDCiudad=ciud.IDCiudad
+
+/*en caso de borrar todos los datos de todas debemos seguir un orden en est caso
+  primero eliminamos los datos de factura luego productos, luego ciudades y por ultimo cliente
+  asi quedaran todas las vacias si no se hace en ese orden nos va a dar un error debido a los indices foraneos*/
+
+Select fac.ValorVenta
+from Cliente cli,Factura fac, Productos prod, Ciudades ciud
+where cli.IDCliente='1000000001' and fac.IDCliente='1000000001' and prod.IDProducto=fac.IDProducto and cli.IDCiudad=ciud.IDCiudad
+
+Select sum(fac.ValorVenta)
+from Cliente cli,Factura fac, Productos prod, Ciudades ciud
+where cli.IDCliente='1000000001' and fac.IDCliente='1000000001' and prod.IDProducto=fac.IDProducto and cli.IDCiudad=ciud.IDCiudad
+
+select * from Cliente
+
+/*actualizacion de datos*/
+update cliente
+set correo='xxx@gmail.com', IDCiudad='5079'
+where IDCliente='1000000001'
+
+select * from Productos
+where valor=10000
+
+update Productos
+set Valor='10000'
+where valor='50000'
+
+/*Borrado de datos*/
+delete 
+from cliente
+
+/*borrado de dato especifico*/
+delete 
+from Productos
+where NombreProducto='azucar'
+
+delete 
+from Productos
+where IDProducto='1'
+
+delete 
+from Productos
+where Valor<1
+
