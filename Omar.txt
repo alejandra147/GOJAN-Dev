@@ -1,17 +1,10 @@
 /*	   Solucion_evidencia_SQL.txt  
 
 	   Realizado por:
-		Laura Argáez
-		Omar Caguazango
 
-	   Instructor
-		Ing. Deivid Triviño
+	sgdjh	Junio/2022
 
-		Ficha 2348214
-
-		Junio/2022
-
-LO QUE DEBE CONTENER LA EVIDENCIA  
+djskjdhO QUE DEBE CONTENER LA EVIDENCIA  
 
 Para el Desarrollo del proyecto en curso tenga en cuenta el siguiente procedimiento:
 
